@@ -19,4 +19,14 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  <servlet>
+    <description></description>
+    <display-name>UserApi</display-name>
+    <servlet-name>UserApi</servlet-name>
+    <servlet-class>com.atashgah.web.UserApi</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UserApi</servlet-name>
+    <url-pattern>/UserApi</url-pattern>
+  </servlet-mapping>
 </web-app>

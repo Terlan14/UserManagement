@@ -14,6 +14,12 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.core.MediaType;
 
 
 @WebServlet("/")
@@ -25,6 +31,7 @@ public class UserServlet extends HttpServlet {
         userDAO = new UserDAOImpl();
     }
 
+   
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         doGet(request, response);
@@ -52,14 +59,17 @@ public class UserServlet extends HttpServlet {
                     updateUser(request, response);
                     break;
                 default:
+                {
                     listUser(request, response);
+                    System.out.println("HII");
+                }
                     break;
             }
         } catch (SQLException ex) {
             throw new ServletException(ex);
         }
     }
-
+  
     private void listUser(HttpServletRequest request, HttpServletResponse response)
     throws SQLException, IOException, ServletException {
         List < User > listUser = userDAO.selectUsers();
@@ -83,7 +93,8 @@ public class UserServlet extends HttpServlet {
         dispatcher.forward(request, response);
 
     }
-
+  
+    @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     private void insertUser(HttpServletRequest request, HttpServletResponse response)
     throws SQLException, IOException {
         String name = request.getParameter("name");
@@ -105,7 +116,7 @@ public class UserServlet extends HttpServlet {
         userDAO.updateUser(book);
         response.sendRedirect("list");
     }
-
+  
     private void deleteUser(HttpServletRequest request, HttpServletResponse response)
     throws SQLException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
